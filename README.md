@@ -10,3 +10,12 @@ Static proof-of-concept. Open `index.html` locally or host with GitHub Pages. No
 
 ## GitHub Pages
 Upload `index.html` and `assets/` preserving paths, then enable Pages from the default branch root.
+
+## October 2026 preview fixes
+
+- Language menu triggers full UI re-render for Thai, English, Chinese, Japanese, Malay, and Arabic. Arabic uses RTL layout.
+- Responsive mobile navigation remains accessible on narrower screens.
+- Changing language while the product-detail modal is open retains the selected product.
+- This is still a static demo: registration and RFQ do not create real accounts or submit orders.
+
+QA to complete before merging: check Safari desktop/mobile, six-language switching, RTL, RFQ, product cards and all local assets. Supplier product photographs and videos are not yet populated.
