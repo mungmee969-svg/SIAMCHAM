@@ -1,0 +1,39 @@
+/* SIAMCHAM premium marketplace homepage visual direction */
+:root{--brand-deep:#082f25;--brand-forest:#0a4837;--brand-gold:#d4ab65;--brand-ivory:#faf9f5}
+.hero-prelude{display:flex;align-items:center;justify-content:space-between;gap:16px;background:#e5eadd;color:#557263;padding:11px max(25px,calc((100vw - 1280px)/2));font-size:10px;font-weight:750;letter-spacing:.16em}
+.hero-prelude span:nth-child(2){color:#8b743c}
+.premium-header{min-height:91px}.premium-header .navlinks{position:absolute;left:50%;transform:translateX(-50%);bottom:0;gap:26px}
+.premium-header{position:relative;padding-bottom:33px;padding-top:7px}.premium-header .logo{width:220px}
+.premium-header .navright{gap:8px}
+.wishlist-shortcut,.header-rfq{border:1px solid #dae5dc;background:#fff;color:#0b3c2e;min-width:44px;height:44px;padding:0 11px;display:flex;align-items:center;justify-content:center;gap:5px;font-weight:800;position:relative}
+.wishlist-shortcut{font-size:23px}.wishlist-shortcut span{font-size:10px;align-self:start;padding-top:7px}
+.header-rfq{font-size:12px}.header-rfq span{display:grid;place-items:center;background:#b99761;border-radius:50%;width:17px;height:17px;font-size:10px;color:white}
+.hero{background:linear-gradient(90deg,#092f28 0%,#0a382d 43%,#1e4a3b 100%);color:white}
+.hero-inner{min-height:595px;grid-template-columns:1fr 1.05fr;gap:35px;padding-block:55px}
+.hero .eyebrow{color:#d6b578;border-left:0;padding:0}
+.hero h1{color:white;font-size:clamp(53px,5vw,82px);font-family:Georgia,'Noto Serif Thai',serif;letter-spacing:-.045em;max-width:640px;margin-top:26px}
+.hero h1 span{color:#fff}.hero h1 span:last-child{color:#d9b775}
+.hero p{color:#e1eae2;font-size:16px}
+.hero .btn{border-radius:28px;font-weight:750}.hero .hero-actions .btn:first-child{background:#e9cd8e;color:#133b2f}
+.hero .hero-actions .btn.gold{background:transparent;color:#fff;border:1px solid #d9c89c}
+.hero .pill{color:#d7e7db;border-color:#769186}
+.scene{height:480px;gap:8px;box-shadow:0 22px 65px #01180f49}
+.scene figure:first-child{grid-row:span 2}
+.scene figure img{filter:saturate(1.15) contrast(1.05)}
+.scene figure{outline:1px solid #ffffff13}
+.scene figcaption{font-size:13px;letter-spacing:0}
+.trust{background:#103e32}.trust-row{grid-template-columns:repeat(3,minmax(0,1fr));padding-block:20px}
+.category-strip{display:flex;justify-content:space-between;align-items:center;padding-top:28px;color:#8e7448;font-size:10px;letter-spacing:.18em;font-weight:800}
+.category-strip-link{font-size:11px;letter-spacing:0;color:#315d49}
+#categories{padding-top:38px}.section-overline{display:block;font-size:10px;letter-spacing:.18em;font-weight:850;color:#a78147;margin-bottom:12px}
+.sec-head h2{font-family:Georgia,'Noto Serif Thai',serif;font-weight:700;letter-spacing:-.035em}
+.category .photo{height:175px}.category{border:1px solid #eeeee7;border-radius:8px;box-shadow:0 4px 14px #2d3e3208}
+.category .ct{background:#fff}.category strong{font-size:14px}
+.collection{border-radius:11px;min-height:290px}
+.collection strong{font-family:Georgia,'Noto Serif Thai',serif;font-weight:650;font-size:27px}
+.products{grid-template-columns:repeat(4,minmax(0,1fr))}.product{border-radius:10px;overflow:hidden}
+.product .photo{height:230px}.product-body .meta{color:#936f40}
+#suppliers .panel{border-radius:11px}.cta{border-radius:12px}
+@media(max-width:1190px){.premium-header .navlinks{position:static;transform:none}.premium-header{padding-bottom:8px}.premium-header .navlinks{display:none}}
+@media(max-width:850px){.hero-inner{grid-template-columns:1fr;gap:30px;min-height:0}.scene{height:310px}.hero h1{font-size:clamp(45px,8vw,70px)}.products{grid-template-columns:repeat(2,minmax(0,1fr))}.hero-prelude span:nth-child(3){display:none}}
+@media(max-width:540px){.hero-prelude{padding-inline:18px;font-size:9px}.hero-prelude span:nth-child(2){font-size:8px}.premium-header .navright{gap:4px}.premium-header .header-rfq{display:none}.premium-header .wishlist-shortcut{min-width:32px;padding:0 5px}.premium-header .logo{width:125px}.hero-inner{padding-block:40px}.hero h1{font-size:44px}.scene{height:245px}.category .photo{height:145px}.collection{min-height:190px}.collection strong{font-size:23px}.product .photo{height:155px}}
