@@ -65,3 +65,19 @@ header.premium-header .navright .btn{border-radius:5px;box-shadow:none}
 .photo-hero .hero-shipping,.photo-hero .hero-produce{display:none}
 @media(max-width:920px){.photo-hero .hero-inner{min-height:540px;padding-block:50px}.photo-hero .hero-inner>div:first-child{width:min(620px,90%)}.photo-hero .hero-landscape{background-image:linear-gradient(90deg,rgba(3,42,31,.95),rgba(3,42,31,.65)),url('https://images.unsplash.com/photo-1601493700631-2b16ec4b4716?auto=format&fit=crop&w=1600&q=85')}}
 @media(max-width:560px){.photo-hero .hero-inner{min-height:565px;padding-block:38px}.photo-hero .hero-inner>div:first-child{width:100%}.photo-hero .hero-landscape{background-image:linear-gradient(90deg,rgba(3,42,31,.95),rgba(3,42,31,.72)),url('https://images.unsplash.com/photo-1601493700631-2b16ec4b4716?auto=format&fit=crop&w=1000&q=85')}}
+
+/* Marketplace repositioning: platform, not a fruit shop */
+.photo-hero .hero-landscape{background-image:linear-gradient(90deg,rgba(3,42,31,.97) 0%,rgba(3,42,31,.86) 42%,rgba(3,42,31,.28) 100%),url('https://images.unsplash.com/photo-1578575437130-527eed3abbec?auto=format&fit=crop&w=2400&q=85');background-position:center,center;background-size:cover}
+.photo-hero .hero-inner{min-height:545px}.photo-hero .hero-inner>div:first-child{width:min(750px,68%);max-width:750px}
+.photo-hero .hero h1,.photo-hero h1{font-size:clamp(43px,4.6vw,70px);line-height:1.09;max-width:790px}
+.platform-intro{padding-block:62px 75px}.platform-intro-head{max-width:780px;margin-bottom:27px}
+.platform-intro h2{font:700 clamp(29px,3.1vw,45px)/1.2 Georgia,'Noto Serif Thai',serif;margin:8px 0 16px;color:#0a3f30}
+.platform-intro-head>p{font-size:15px;line-height:1.75;color:#617b6d}
+.platform-paths{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:13px}
+.platform-paths article{border:1px solid #dbe4db;border-top:3px solid #c6a16a;background:#fff;padding:27px 25px;min-height:205px}
+.path-symbol{color:#b08447;font-size:12px;letter-spacing:.13em;font-weight:850}
+.platform-paths h3{font-size:18px;margin:15px 0 9px;color:#0b4333}
+.platform-paths p{font-size:13px;color:#637b6b;line-height:1.7;min-height:64px}
+.platform-paths a{font-size:12px;color:#0d573f;font-weight:800;text-decoration:underline;text-underline-offset:4px}
+@media(max-width:920px){.platform-paths{grid-template-columns:1fr 1fr}.platform-paths article:last-child{grid-column:span 2}.photo-hero .hero-inner>div:first-child{width:90%}}
+@media(max-width:560px){.platform-intro{padding-block:46px}.platform-paths{grid-template-columns:1fr}.platform-paths article:last-child{grid-column:auto}.platform-paths article{min-height:auto}.platform-paths p{min-height:0}.photo-hero h1{font-size:clamp(37px,8.9vw,48px)}.photo-hero .hero-landscape{background-image:linear-gradient(90deg,rgba(3,42,31,.96),rgba(3,42,31,.76)),url('https://images.unsplash.com/photo-1578575437130-527eed3abbec?auto=format&fit=crop&w=1100&q=85')}}
