@@ -81,3 +81,13 @@ header.premium-header .navright .btn{border-radius:5px;box-shadow:none}
 .platform-paths a{font-size:12px;color:#0d573f;font-weight:800;text-decoration:underline;text-underline-offset:4px}
 @media(max-width:920px){.platform-paths{grid-template-columns:1fr 1fr}.platform-paths article:last-child{grid-column:span 2}.photo-hero .hero-inner>div:first-child{width:90%}}
 @media(max-width:560px){.platform-intro{padding-block:46px}.platform-paths{grid-template-columns:1fr}.platform-paths article:last-child{grid-column:auto}.platform-paths article{min-height:auto}.platform-paths p{min-height:0}.photo-hero h1{font-size:clamp(37px,8.9vw,48px)}.photo-hero .hero-landscape{background-image:linear-gradient(90deg,rgba(3,42,31,.96),rgba(3,42,31,.76)),url('https://images.unsplash.com/photo-1578575437130-527eed3abbec?auto=format&fit=crop&w=1100&q=85')}}
+
+/* Hero direction v4: Thai sourcing marketplace, no ships and no isolated fruit */
+.photo-hero .hero-inner{min-height:560px}
+.photo-hero .hero-art{position:absolute;inset:0;z-index:-1;display:block;width:100%;height:100%;margin:0;overflow:hidden}
+.photo-hero .hero-landscape{position:absolute;inset:0;background-image:linear-gradient(90deg,#042d23 0%,rgba(4,45,35,.97) 29%,rgba(4,45,35,.72) 54%,rgba(4,45,35,.17) 100%),url('https://images.unsplash.com/photo-1542838132-92c53300491e?auto=format&fit=crop&w=2400&q=85');background-position:center,right center;background-size:cover;background-repeat:no-repeat}
+.photo-hero .hero-inner>div:first-child{width:min(670px,60%);position:relative;z-index:2}
+.hero-assortment{position:absolute;right:clamp(22px,4vw,75px);bottom:30px;display:flex;justify-content:flex-end;flex-wrap:wrap;gap:7px;width:min(470px,40%);z-index:1}
+.hero-assortment span{background:rgba(6,47,36,.77);border:1px solid rgba(233,215,177,.5);color:#fff3d9;padding:11px 13px;letter-spacing:.07em;font-size:10px;font-weight:800;backdrop-filter:blur(8px)}
+@media(max-width:920px){.photo-hero .hero-art{height:100%;min-height:0;position:absolute}.photo-hero .hero-inner>div:first-child{width:85%}.hero-assortment{width:60%;right:16px}.photo-hero .hero-landscape{background-image:linear-gradient(90deg,rgba(4,45,35,.97),rgba(4,45,35,.65)),url('https://images.unsplash.com/photo-1542838132-92c53300491e?auto=format&fit=crop&w=1500&q=85')}}
+@media(max-width:560px){.photo-hero .hero-inner{min-height:560px;padding-bottom:94px}.photo-hero .hero-inner>div:first-child{width:100%}.hero-assortment{bottom:18px;left:17px;right:17px;width:auto;justify-content:flex-start}.hero-assortment span{font-size:8px;padding:8px}}
