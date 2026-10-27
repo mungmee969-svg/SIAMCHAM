@@ -10,7 +10,7 @@ suppliers:[{name:"Thai Community Producer",location:"Province not verified",veri
 const menu={
 admin:[["overview","Overview"],["rfqs","RFQ & Quotations"],["orders","Orders"],["tracking","Shipment Tracking"],["payments","Incoming Payments"],["ledger","Income & Expenses"],["held","Held Funds"],["payouts","Supplier Payouts"],["products","Products & OTOP"],["suppliers","Suppliers"],["reports","Financial Reports"],["settings","Settings"]],
 operations:[["overview","Overview"],["rfqs","RFQ & Quotations"],["orders","Orders"],["tracking","Shipment Tracking"],["products","Products & OTOP"],["suppliers","Suppliers"]],
-finance:[["overview","Overview"],["orders","Orders"],["payments","Incoming Payments"],["payouts","Supplier Payouts"],["reports","Financial Reports"]],
+finance:[["overview","Overview"],["orders","Orders"],["tracking","Shipment Tracking"],["payments","Incoming Payments"],["ledger","Income & Expenses"],["held","Held Funds"],["payouts","Supplier Payouts"],["reports","Financial Reports"]],
 supplier:[["overview","Overview"],["products","My Products"],["orders","My Orders"],["tracking","Shipment Tracking"],["payouts","My Settlements"]],
 buyer:[["overview","Overview"],["rfqs","My RFQs"],["orders","My Orders"],["tracking","Shipment Tracking"],["payments","My Payments"]]
 };
@@ -128,6 +128,11 @@ samplePayables.map(x=>[x.order,x.supplier,money(x.amount),tag(x.status)])))+orde
 // Existing reports page is extended with financial and order breakdowns.
 function financeAndOrdersReports(){return detailedReports()}
 
+
+// Translate shipment progress and report copy in dynamically rendered content.
+Object.assign(uiTH,{
+"Order created (demo)":"สร้างออเดอร์ตัวอย่าง","Bank receipt awaiting verification":"รอตรวจสอบเงินเข้าธนาคาร","Supplier preparation not started":"ผู้ผลิตยังไม่เริ่มเตรียมสินค้า","Carrier collection pending":"รอขนส่งเข้ารับ","In transit / customs pending":"รอขนส่งและพิธีการศุลกากร","Delivered pending":"รอส่งมอบ","Quotation under review (demo)":"กำลังตรวจใบเสนอราคา","Order confirmation pending":"รอยืนยันคำสั่งซื้อ","Awaiting payment":"รอชำระเงิน","Quotation stage":"ขั้นตอนใบเสนอราคา","Held · verification":"พักรอตรวจสอบ","Bank transfer fee":"ค่าธรรมเนียมโอนเงินธนาคาร","Incoming wire":"รับเงินโอนจากต่างประเทศ","Export handling":"ค่าดำเนินการส่งออก","Estimate":"ประมาณการ","Not due until release":"ยังไม่ครบเงื่อนไขการจ่าย","Awaiting order approval":"รออนุมัติออเดอร์","Not approved":"ยังไม่อนุมัติ","Blocked · payment unverified":"ระงับจ่าย: ยังไม่ตรวจสอบเงินเข้า","Not dispatched":"ยังไม่ส่งสินค้า","Finance Reports":"รายงานการเงิน"
+});
 const pages={overview,rfqs,orders,payments,payouts,products,suppliers,reports:financeAndOrdersReports,ledger,held,tracking,settings};
 function render(){const allowed=menu[role];if(!allowed.some(x=>x[0]===view))view="overview";q("nav").innerHTML=allowed.map(([id,label])=>'<button type="button" class="'+(view===id?"active":"")+'" data-view="'+id+'">'+label+'</button>').join("");q("nav").querySelectorAll("button").forEach(el=>el.addEventListener("click",()=>{view=el.dataset.view;render()}));const name=allowed.find(x=>x[0]===view)[1];q("title").textContent=name;q("crumb").textContent=name;q("subtitle").textContent=role==="admin"?"Platform-wide operations (demo)":role==="finance"?"Finance workspace (demo)":role==="supplier"?"Supplier portal preview":role==="buyer"?"Buyer portal preview":"Operations workspace (demo)";q("content").innerHTML=pages[view]();translateUI();location.hash=role+"/"+view}
 q("language").addEventListener("change",e=>{uiLang=e.target.value;localStorage.setItem("siamcham_backoffice_language",uiLang);render()});
