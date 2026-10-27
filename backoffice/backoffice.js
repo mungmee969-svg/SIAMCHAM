@@ -55,10 +55,49 @@ function products(){return panel(role==="supplier"?"My listings":"Products & OTO
 function suppliers(){return panel("Supplier onboarding",table(["Supplier","Location","Verification","Products"],seed.suppliers.map(x=>[escapeHTML(x.name),x.location,tag(x.verification),String(x.products)])),'<button class="button" disabled>Approve supplier · backend required</button>')}
 function reports(){return notice("Financial examples are not a ledger. Real reporting requires foreign-currency amounts, actual credit, fee allocation, FX conversion, supplier liabilities and immutable audit records.")+cards([["Verified receipts","—","No connected bank"],["Supplier payables","—","No ledger connected"],["Platform margin","—","Not calculated"],["Unreconciled payments","—","No imported statements"]])+panel("Financial report modules",'<div class="split"><div class="info-box"><strong>Cash reconciliation</strong><p>Bank statement, reference, currency and receipt date</p></div><div class="info-box"><strong>Supplier settlements</strong><p>Payable ledger, payment approvals and transfers</p></div><div class="info-box"><strong>Margin reporting</strong><p>GP snapshot per SKU and FX/bank charges</p></div><div class="info-box"><strong>Accounting export</strong><p>Invoices, credit notes and audit trail</p></div></div>')}
 function settings(){return notice("Security controls are not active here. Roles shown in the switcher are view previews, not authenticated authorization.")+panel("Integration readiness",'<div class="steps"><div class="step"><b>1</b>Supabase Auth, secure role membership and RLS</div><div class="step"><b>2</b>Server-side price, margin and payout policies</div><div class="step"><b>3</b>Corporate bank account setup and payment verification</div><div class="step"><b>4</b>Legally reviewed invoice / agency agreements</div><div class="step"><b>5</b>Two-person payout approval and logs</div></div>')}
+function openReport(id){if(!menu[role].some(x=>x[0]===id))return;view=id;render()}
+function dashboardMetricSummary(){
+ const heldTotal=sampleLedger.filter(x=>x.type==="income"&&x.status.startsWith("Held")).reduce((n,x)=>n+x.amount,0);
+ const estimatedCosts=sampleLedger.filter(x=>x.type==="expense").reduce((n,x)=>n+x.amount,0);
+ const payableTotal=samplePayables.reduce((n,x)=>n+x.amount,0);
+ return {heldTotal,estimatedCosts,payableTotal,clearedTotal:0,orders:seed.orders.length,rfqs:seed.rfqs.length,shipmentsInTransit:sampleShipping.filter(x=>x.status==="In transit").length};
+}
+function dashboardShortcut(label,page,sub){
+ const enabled=menu[role].some(x=>x[0]===page);
+ return '<button class="dashboard-link" type="button" '+(enabled?'onclick="openReport(\''+page+'\')"':'disabled')+'><strong>'+label+'</strong><small>'+sub+'</small><span>→</span></button>';
+}
 function overview(){
-const roleMetric=role==="supplier"?[["My listed products","2","Illustrative listings"],["My orders","1","Example record"],["My settlement","Pending","Not verified"],["OTOP content","2","Stories to complete"]]:role==="buyer"?[["My RFQs","1","Example request"],["My orders","2","Demo examples"],["Payments received","0","Not bank-verified"],["Open quotations","1","Sample"]]:[["Open RFQs","3","Demonstration only"],["Orders in pipeline","2","Not live"],["Confirmed bank receipts","0","No bank connected"],["Pending supplier payouts","1","Blocked example"]];
-return cards(roleMetric)+'<div class="layout">'+panel("Latest trade activity",table(["Reference","Buyer / destination","Status"],seed.rfqs.map(x=>[x.id,x.buyer+" · "+x.country,tag(x.status)])))+panel("Next operational steps",'<div class="steps"><div class="step"><b>1</b>Validate supplier and product information</div><div class="step"><b>2</b>Prepare export quotation and contract</div><div class="step"><b>3</b>Verify cleared bank receipts</div><div class="step"><b>4</b>Approve supplier settlement</div></div>')+'</div>'+notice("This is a static preview. All figures and trading entities shown are fictitious demonstrations, not operational balances or transactions.")}
-
+ if(role==="supplier")return cards([["My listed products",String(seed.products.filter(x=>x.category==="OTOP").length),"Demo"],["My orders","1","Demo"],["My settlement","Pending","Not verified"],["OTOP content","2","Stories to complete"]])+panel(local("รายการที่เกี่ยวข้อง","Relevant pages"),'<div class="dashboard-shortcuts">'+dashboardShortcut(local("สินค้า","Products"),"products",local("ข้อมูลสินค้าของฉัน","My product listings"))+dashboardShortcut(local("คำสั่งซื้อ","Orders"),"orders",local("สถานะคำสั่งซื้อ","Order statuses"))+dashboardShortcut(local("ยอดรับเงิน","Settlements"),"payouts",local("ยังไม่มีการจ่ายจริง","No real settlements"))+'</div>');
+ if(role==="buyer")return cards([["My RFQs","1","Demo"],["My orders",String(seed.orders.length),"Demo"],["Payments received","0","No bank integration"],["Open quotations","1","Demo"]])+panel(local("รายการและสถานะ","Orders & statuses"),'<div class="dashboard-shortcuts">'+dashboardShortcut(local("คำขอราคา","RFQs"),"rfqs",local("ติดตามคำขอ","View requests"))+dashboardShortcut(local("ออเดอร์","Orders"),"orders",local("รายการคำสั่งซื้อ","Order list"))+dashboardShortcut(local("การชำระ","Payments"),"payments",local("สถานะตรวจสอบเงิน","Payment verification"))+dashboardShortcut(local("ติดตามสินค้า","Tracking"),"tracking",local("สถานะการจัดส่ง","Shipping status"))+'</div>');
+ const m=dashboardMetricSummary();
+ const tiles=cards([
+ [local("ยอดออเดอร์","Orders"),String(m.orders),local("รายการสาธิต","Demo records")],
+ [local("คำขอราคา","RFQs"),String(m.rfqs),local("รายการสาธิต","Demo records")],
+ [local("เงินเข้าที่ยืนยันแล้ว","Verified receipts"),money(m.clearedTotal),local("ไม่มีธนาคารเชื่อมต่อ","No bank connection")],
+ [local("เงินพักรอตรวจสอบ","Held funds"),money(m.heldTotal),local("ไม่ใช่ยอดพร้อมจ่าย","Not available for payout")],
+ [local("ค้างจ่ายผู้ประกอบการ","Supplier payables"),money(m.payableTotal),local("ยอดตัวอย่าง ยังไม่อนุมัติ","Unapproved demo balances")],
+ [local("รายจ่ายประมาณการ","Estimated expenses"),money(m.estimatedCosts),local("ยังไม่ใช่ยอดจ่ายจริง","Unpaid estimates")],
+ [local("สินค้าอยู่ระหว่างขนส่ง","In transit"),String(m.shipmentsInTransit),local("ยังไม่เชื่อมขนส่ง","No live carrier feed")],
+ [local("ออเดอร์ส่งสำเร็จ","Delivered"),"0",local("ยังไม่มีหลักฐานส่งมอบ","No proof of delivery")]
+ ]);
+ const permitted=menu[role].map(x=>x[0]);
+ const sections=[
+ ["orders",local("รายงานออเดอร์","Order report"),local("รายการ ยอดสั่งซื้อ และสถานะ","Order amounts and status")],
+ ["payments",local("เงินรับต่างประเทศ","Incoming payments"),local("ยอดอ้างอิงและการตรวจสอบ","Receipts and verification")],
+ ["ledger",local("รายรับ–รายจ่าย","Income & expenses"),local("แยกรายการตามหมวด","Ledger by category")],
+ ["held",local("เงินพักรอตรวจสอบ","Held funds"),local("เงินรอตรวจสอบก่อนปล่อย","Unverified funds")],
+ ["payouts",local("เจ้าหนี้ผู้ประกอบการ","Supplier payouts"),local("ยอดที่ต้องจ่ายแต่ละราย","Payables by supplier")],
+ ["reports",local("รายงานการเงินและออเดอร์","Finance & order reports"),local("แยกหมวดการเงินและสถานะออเดอร์","Financial and order breakdown")],
+ ["tracking",local("ติดตามสินค้า","Shipment tracking"),local("ขั้นตอนขนส่งและเลขติดตาม","Shipment milestones")]
+ ].filter(x=>permitted.includes(x[0]));
+ return notice(local("DASHBOARD ตัวอย่าง: ยอดอ้างอิงทั้งหมดมาจากชุดข้อมูลสาธิตเดียวกับหน้ารายงาน ยังไม่ใช่ยอดเงินจริง","DEMO DASHBOARD: all summaries derive from the same sample records as the reports; no live balances."))+
+ tiles+
+ panel(local("เปิดรายงานฉบับละเอียด","Detailed reports"),'<div class="dashboard-shortcuts">'+sections.map(x=>dashboardShortcut(x[1],x[0],x[2])).join("")+'</div>')+
+ '<div class="layout">'+
+ panel(local("ออเดอร์ล่าสุด","Recent orders"),table([local("ออเดอร์","Order"),local("ลูกค้า","Buyer"),local("ยอดเสนอราคา","Quoted amount"),local("สถานะ","Status")],seed.orders.map(x=>[x.id,x.buyer,x.amount,tag(x.status)])))+
+ panel(local("เจ้าหนี้ผู้ประกอบการ","Supplier payables"),table([local("ผู้ประกอบการ","Supplier"),local("ยอดค้าง","Amount"),local("สถานะ","Status")],samplePayables.map(x=>[x.supplier,money(x.amount),tag(x.status)])))+
+ '</div>';
+}
 // Shared DEMO operational dataset; separate expected receipts, verified receipts, held funds and payables.
 const sampleLedger=[
 {id:"TX-001",order:"ORD-DEMO-001",type:"income",category:"Incoming wire",amount:91500,currency:"THB",status:"Held · verification",date:"2026-10-26"},
